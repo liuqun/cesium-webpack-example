@@ -8,7 +8,7 @@ module.exports = [{
     mode: 'development',
     context: __dirname,
     entry: {
-        app: './src/index.js'
+        app: './src/app.js'
     },
     output: {
         filename: '[name].js',
@@ -42,6 +42,7 @@ module.exports = [{
         // Copy Cesium Assets, Widgets, and Workers to a static directory
         new CopyWebpackPlugin({
             patterns: [
+                { from: 'static', to: 'static' },
                 { from: 'node_modules/cesium/Build/Cesium/Workers', to: 'Workers' },
                 { from: 'node_modules/cesium/Build/Cesium/ThirdParty', to: 'ThirdParty' },
                 { from: 'node_modules/cesium/Build/Cesium/Assets', to: 'Assets' },
