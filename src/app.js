@@ -171,21 +171,41 @@ let labellayer = new Cesium.WebMapTileServiceImageryProvider({
 // });
 
 let viewer = new Cesium.Viewer("cesiumContainer", {
-    imageryProvider: new Cesium.TileMapServiceImageryProvider({
-        url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
+    // "http://t0.tianditu.gov.cn/img_w/wmts?tk=你的天地图token"
+    imageryProvider : new Cesium.WebMapTileServiceImageryProvider({
+        url: "/img_w/wmts?tk=e7894a985fe457b58ef9c65beae0619a",
+        layer: "img",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        show: false
     }),
-    terrainProvider: terrain,
-    animation: false,//是否创建动画小器件，左下角仪表
-    timeline: false,//是否显示时间轴
-    sceneModePicker: true,//是否显示3D/2D选择器
-    baseLayerPicker: false,//是否显示图层选择器
-    geocoder: false,//是否显示geocoder小器件，右上角查询按钮
-    scene3DOnly: false,//如果设置为true，则所有几何图形以3D模式绘制以节约GPU资源
-    navigationHelpButton: false,//是否显示右上角的帮助按钮
-    homeButton: true,//是否显示Home按钮
-    infoBox: true,//是否显示信息框
+    animation: false,  //是否显示动画控件(左下方那个)
+    baseLayerPicker: true, //是否显示图层选择控件
+    geocoder: true, //是否显示地名查找控件
+    timeline: false, //是否显示时间线控件
+    sceneModePicker: true, //是否显示投影方式控件
+    navigationHelpButton: false, //是否显示帮助信息控件
+    infoBox: true,  //是否显示点击要素之后显示的信息
     showRenderLoopErrors: false//如果设为true，将在一个HTML面板中显示错误信息
 });
+
+// let viewer = new Cesium.Viewer("cesiumContainer", {
+//     imageryProvider: new Cesium.TileMapServiceImageryProvider({
+//         url: Cesium.buildModuleUrl("Assets/Textures/NaturalEarthII"),
+//     }),
+//     terrainProvider: terrain,
+//     animation: false,//是否创建动画小器件，左下角仪表
+//     timeline: false,//是否显示时间轴
+//     sceneModePicker: true,//是否显示3D/2D选择器
+//     baseLayerPicker: false,//是否显示图层选择器
+//     geocoder: false,//是否显示geocoder小器件，右上角查询按钮
+//     scene3DOnly: false,//如果设置为true，则所有几何图形以3D模式绘制以节约GPU资源
+//     navigationHelpButton: false,//是否显示右上角的帮助按钮
+//     homeButton: true,//是否显示Home按钮
+//     infoBox: true,//是否显示信息框
+//     showRenderLoopErrors: false//如果设为true，将在一个HTML面板中显示错误信息
+// });
 
 //强制隐藏cesium控件版权信息
 viewer._cesiumWidget._creditContainer.style.display = "none";
@@ -197,12 +217,12 @@ let layers = viewer.scene.imageryLayers;
 //叠加本地瓦片地图
 layers.addImageryProvider(imageprovider);
 
-//叠加地球夜景
-// let blackMarble = layers.addImageryProvider(
-//    new Cesium.IonImageryProvider({ assetId: 3812 })
-// );
-// blackMarble.alpha = 0.5;//透明度，取值范围0%表示完全透明，100%表示不透明
-// blackMarble.brightness = 2.0; // 亮度 > 1.0 increases brightness.  < 1.0 decreases.
+叠加地球夜景
+let blackMarble = layers.addImageryProvider(
+   new Cesium.IonImageryProvider({ assetId: 3812 })
+);
+blackMarble.alpha = 0.5;//透明度，取值范围0%表示完全透明，100%表示不透明
+blackMarble.brightness = 2.0; // 亮度 > 1.0 increases brightness.  < 1.0 decreases.
 
 //叠加本地标签瓦片图层
 layers.addImageryProvider(labellayer);
